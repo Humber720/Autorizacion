@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Autorización para el Desfile</title>
+  <link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
+  <div class="contenedor" id="formularioPDF">
+    <h2>BANDA DE MÚSICA - U.E.T.H.P. JUPAPINA</h2>
+    <h3>AUTORIZACIÓN PARA EL DESFILE DEL 4 DE AGOSTO - LOCALIDAD DE MECAPACA</h3>
+
+    <form id="formulario">
+      <p><strong>Yo, padre/madre o tutor del estudiante, autorizo la participación de mi hijo(a) en el desfile a realizarse el 4 de agosto en la localidad de Mecapaca:</strong></p>
+      <input type="text" id="nombre_tutor" name="nombre_tutor" placeholder="Nombre completo del padre/madre o tutor" required />
+      <!-- Confirmación de pago CON checkbox -->
+      <div class="checkbox-text">
+        <input type="checkbox" id="chkPago" name="pago" required>
+        <label for="chkPago"><strong>He cancelado el monto de 27 Bs. para transporte y alimentación, acatando lo decidido en la reunión por mayoría.</strong></label>
+      </div>
+      
+      <p><strong>Nombre del estudiante:</strong></p>
+      <input type="text" id="nombre_estudiante" name="nombre_estudiante" placeholder="Nombre completo del estudiante" required />
+
+      <p><strong>El estudiante asistirá puntualmente con el uniforme de la Banda de Música, cuidando el instrumento musical prestado, demostrando responsabilidad y disciplina.</strong></p>
+
+      <p><strong>En caso de no poder acompañarlo, despues del desfile autorizo que mi hijo(a) se quedara al volver  en el lugar:</strong></p>
+      <input type="text" id="lugar_retiro" name="lugar_retiro" placeholder="Escriba el lugar donde se quedará o llegara hasta UE Jupapina" required />
+
+      <p><strong>El instrumento musical prestado será devuelto el día:</strong></p>
+      <input type="text" id="fecha_devolucion" name="fecha_devolucion" placeholder="Ej. mismo día / martes 5 de agosto" required />
+
+      <p><strong>Número de celular de contacto (padre/madre o tutor):</strong></p>
+      <input type="tel" id="celular_contacto" name="celular_contacto" placeholder="Ej. 76543210" maxlength="8" pattern="[0-9]{8}" inputmode="numeric" required />
+
+      <button type="submit" id="btnEnviar">Enviar formulario</button>
+    </form>
+
+    <!-- Botón para descargar PDF, oculto hasta enviar -->
+    <button id="descargarPDF" style="display:none; margin-top: 15px;">Descargar PDF</button>
+
+    <div id="modal" class="modal">
+      <div class="modal-contenido">
+        <p id="modal-mensaje">✅ ¡Formulario enviado correctamente!</p>
+        <button id="cerrar-modal">Cerrar</button>
+      </div>
+    </div>
+
+    <p id="respuesta" class="mensaje"></p>
+  </div>
+
+  <!-- Librerías -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
