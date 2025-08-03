@@ -44,24 +44,34 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
   const btnEnviar = document.getElementById('btnEnviar');
   const btnDescargar = document.getElementById('descargarPDF');
 
+  // Asegurar visibilidad total en móviles
+  window.scrollTo(0, 0);
+  formularioPDF.style.minHeight = '100vh';
+
   // Ocultar botones temporalmente
   btnEnviar.style.display = 'none';
   btnDescargar.style.display = 'none';
 
-  // Obtener fecha y hora actual en formato legible
+  // Obtener fecha y hora actual
   const ahora = new Date();
-  const fechaStr = ahora.toLocaleDateString('es-ES'); // dd/mm/yyyy
-  const horaStr = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }); // hh:mm
+  const fechaStr = ahora.toLocaleDateString('es-ES');
+  const horaStr = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
   const fechaHora = `${fechaStr} ${horaStr}`;
 
-  // Crear firma con fecha y hora
+  // Crear línea de firma
   const firmaLinea = document.createElement('p');
   firmaLinea.textContent = `Firma del padre/madre o tutor: ____________________________  ${fechaHora}`;
   firmaLinea.style.marginTop = '30px';
   firmaLinea.style.fontWeight = 'bold';
   formularioPDF.appendChild(firmaLinea);
 
-  html2canvas(formularioPDF).then(canvas => {
+  // Captura y generación del PDF con mejoras para móviles
+  html2canvas(formularioPDF, {
+    scale: 2,
+    useCORS: true,
+    windowWidth: document.documentElement.scrollWidth,
+    windowHeight: document.documentElement.scrollHeight
+  }).then(canvas => {
     const imgData = canvas.toDataURL('image/png');
     const { jsPDF } = window.jspdf;
     const pdf = new jsPDF('p', 'mm', 'a4');
@@ -76,12 +86,8 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
     // Restaurar visibilidad de botones y limpiar
     btnEnviar.style.display = 'inline-block';
     btnDescargar.style.display = 'none';
-    firmaLinea.remove(); // Quitar línea de firma del HTML
+    firmaLinea.remove();
     document.getElementById('formulario').reset();
     document.getElementById('modal').style.display = 'none';
   });
 });
-
-
-
-
