@@ -4,20 +4,16 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
   const btnDescargar = document.getElementById('descargarPDF');
   const modal = document.getElementById('modal');
 
-  // Asegurar visibilidad completa y ajustar altura mínima
   window.scrollTo(0, 0);
   formularioPDF.style.minHeight = '100vh';
 
-  // Ocultar botones y modal para la captura
   btnEnviar.style.display = 'none';
   btnDescargar.style.display = 'none';
   modal.style.display = 'none';
 
-  // Eliminar firmas anteriores si existen
   const firmaAntigua = document.getElementById('firma-autorizacion');
   if (firmaAntigua) firmaAntigua.remove();
 
-  // Agregar firma con fecha y hora
   const ahora = new Date();
   const fecha = ahora.toLocaleDateString('es-ES');
   const hora = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
@@ -43,7 +39,6 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
 
   formularioPDF.appendChild(contenedorFirma);
 
-  // Generar PDF con escala y ajuste para que quepa en 1 página A4
   html2canvas(formularioPDF, {
     scale: 2,
     useCORS: true,
@@ -57,21 +52,24 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
-    const margin = 10; // margen en mm
+    const imgWidth = canvas.width;
+    const imgHeight = canvas.height;
 
-    let imgWidth = pageWidth - margin * 2;
-    let imgHeight = (canvas.height * imgWidth) / canvas.width;
+    // Calcular escala para que la imagen quepa en la página
+    const pdfWidth = pageWidth - 20; // margen 10 mm a cada lado
+    const pdfHeight = (imgHeight * pdfWidth) / imgWidth;
 
-    if (imgHeight > pageHeight - margin * 2) {
-      const scale = (pageHeight - margin * 2) / imgHeight;
-      imgHeight = imgHeight * scale;
-      imgWidth = imgWidth * scale;
+    let scaleFactor = 1;
+    if (pdfHeight > pageHeight - 20) {
+      scaleFactor = (pageHeight - 20) / pdfHeight;
     }
 
-    pdf.addImage(imgData, 'PNG', margin, margin, imgWidth, imgHeight);
+    const finalWidth = pdfWidth * scaleFactor;
+    const finalHeight = pdfHeight * scaleFactor;
+
+    pdf.addImage(imgData, 'PNG', 10, 10, finalWidth, finalHeight);
     pdf.save('autorizacion_desfile.pdf');
 
-    // Restaurar visibilidad y limpiar
     btnEnviar.style.display = 'inline-block';
     btnDescargar.style.display = 'none';
     modal.style.display = 'none';
