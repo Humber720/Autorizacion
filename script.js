@@ -59,31 +59,26 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
   const fecha = ahora.toLocaleDateString('es-ES');
   const hora = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
-const contenedorFirma = document.createElement('div');
-contenedorFirma.id = 'firma-autorizacion';
-contenedorFirma.style.marginTop = '40px';
+  const contenedorFirma = document.createElement('div');
+  contenedorFirma.id = 'firma-autorizacion';
+  contenedorFirma.style.display = 'flex';
+  contenedorFirma.style.justifyContent = 'space-between';
+  contenedorFirma.style.marginTop = '30px';
+  contenedorFirma.style.fontWeight = 'bold';
 
-// Firma centrada
-const firma = document.createElement('p');
-firma.textContent = '____________________________   Firma del padre/madre o tutor';
-firma.style.textAlign = 'center';
-firma.style.margin = '0 auto'; // centrado horizontal
-firma.style.fontWeight = 'bold';
+  const firma = document.createElement('p');
+  firma.textContent = '____________________________Firma del padre/madre o tutor';
+  firma.style.margin = '0';
 
-// Fecha y hora alineadas a la izquierda
-const fechaHora = document.createElement('p');
-fechaHora.textContent = `${fecha} ${hora}`;
-fechaHora.style.textAlign = 'left';
-fechaHora.style.marginTop = '10px';
-fechaHora.style.fontWeight = 'normal';
+  const fechaHora = document.createElement('p');
+  fechaHora.textContent = `${fecha} ${hora}`;
+  fechaHora.style.margin = '0';
+  fechaHora.style.textAlign = 'right';
 
-// Agregar al contenedor
-contenedorFirma.appendChild(firma);
-contenedorFirma.appendChild(fechaHora);
+  contenedorFirma.appendChild(firma);
+  contenedorFirma.appendChild(fechaHora);
 
-// Agregar al cuerpo del PDF (o al div que genera el canvas)
-formularioPDF.appendChild(contenedorFirma);
-
+  formularioPDF.appendChild(contenedorFirma);
 
   // Escalar el formulario a un ancho fijo (A4) para evitar corte en móviles
   const originalWidth = formularioPDF.style.width;
@@ -122,6 +117,3 @@ formularioPDF.appendChild(contenedorFirma);
     document.getElementById('formulario').reset();
   });
 });
-
-
-
