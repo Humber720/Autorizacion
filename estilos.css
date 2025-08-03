@@ -1,31 +1,25 @@
 /* Reset básico */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
-/* Estilo general del cuerpo */
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f2f2f2;
+  padding: 20px;
   color: #333;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
 }
 
-/* Contenedor para PDF - tamaño carta exacto */
+/* Contenedor principal */
 .contenedor {
-  width: 21.59cm;
-  min-height: 27.94cm;
+  max-width: 800px;
+  margin: auto;
   background-color: white;
-  padding: 2cm; /* puedes ajustar a 0 si no deseas margen interno */
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  padding: 25px 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Títulos */
@@ -35,12 +29,10 @@ h2, h3 {
   color: #004080;
 }
 
-/* Párrafos y texto general */
+/* Párrafos y textos */
 p {
   margin-top: 15px;
   line-height: 1.5;
-  text-align: justify;
-  font-size: 16px;
 }
 
 /* Inputs */
@@ -54,7 +46,7 @@ input[type="tel"] {
   font-size: 16px;
 }
 
-/* Checkbox con texto alineado */
+/* Checkbox y texto alineado */
 .checkbox-text {
   display: flex;
   align-items: flex-start;
@@ -80,8 +72,10 @@ button {
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
-  margin: 20px auto 0 auto;
+  margin-top: 20px;
   display: block;
+  margin-left: auto;
+  margin-right: auto;
   transition: background-color 0.3s ease;
 }
 
@@ -109,7 +103,7 @@ button:hover {
   text-align: center;
 }
 
-/* Mensaje de éxito */
+/* Mensaje de respuesta */
 .mensaje {
   margin-top: 20px;
   text-align: center;
@@ -117,25 +111,21 @@ button:hover {
   color: green;
 }
 
-/* Firma */
-#contenedor-firma {
-  margin-top: 40px;
-}
+/* Responsive */
+@media (max-width: 600px) {
+  .contenedor {
+    padding: 20px;
+  }
 
-#contenedor-firma p {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
+  h2, h3 {
+    font-size: 18px;
+  }
 
-#contenedor-firma p:first-child {
-  text-align: left;
+  input, button {
+    font-size: 15px;
+  }
 }
-
-#contenedor-firma p:last-child {
-  text-align: center;
-}
-
-/* Botones del modal */
+/* Botones alineados */
 .modal-header {
   display: flex;
   justify-content: flex-end;
@@ -159,24 +149,3 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* RESPONSIVE para celulares: solo afecta vista previa */
-@media screen and (max-width: 768px) {
-  .contenedor {
-    width: 100%;
-    min-height: auto;
-    padding: 20px;
-    box-shadow: none;
-  }
-
-  h2, h3 {
-    font-size: 18px;
-  }
-
-  input, button {
-    font-size: 15px;
-  }
-
-  #contenedor-firma p {
-    font-size: 14px;
-  }
-}
