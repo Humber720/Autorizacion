@@ -61,39 +61,27 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
 
 const contenedorFirma = document.createElement('div');
 contenedorFirma.id = 'firma-autorizacion';
-contenedorFirma.style.display = 'flex';
-contenedorFirma.style.flexDirection = 'column';
-contenedorFirma.style.alignItems = 'center';  // Centra horizontalmente
-
 contenedorFirma.style.marginTop = '40px';
-contenedorFirma.style.fontWeight = 'bold';
 
-// Línea para firmar (centrada)
-const lineaFirma = document.createElement('div');
-lineaFirma.style.borderBottom = '2px solid black';
-lineaFirma.style.width = '60%';
-lineaFirma.style.marginBottom = '5px';
+// Firma centrada
+const firma = document.createElement('p');
+firma.textContent = '____________________________   Firma del padre/madre o tutor';
+firma.style.textAlign = 'center';
+firma.style.margin = '0 auto'; // centrado horizontal
+firma.style.fontWeight = 'bold';
 
-// Texto debajo de la línea (centrado)
-const textoFirma = document.createElement('p');
-textoFirma.textContent = 'Firma del padre/madre o tutor';
-textoFirma.style.margin = '0';
-textoFirma.style.textAlign = 'center';
-textoFirma.style.fontWeight = 'normal';
-
-// Fecha y hora alineada a la izquierda
+// Fecha y hora alineadas a la izquierda
 const fechaHora = document.createElement('p');
 fechaHora.textContent = `${fecha} ${hora}`;
-fechaHora.style.margin = '15px 0 0 0'; // margen arriba para separar
 fechaHora.style.textAlign = 'left';
+fechaHora.style.marginTop = '10px';
 fechaHora.style.fontWeight = 'normal';
-fechaHora.style.alignSelf = 'flex-start'; // importante para alinear a la izquierda dentro del flex column
 
-// Append
-contenedorFirma.appendChild(lineaFirma);
-contenedorFirma.appendChild(textoFirma);
+// Agregar al contenedor
+contenedorFirma.appendChild(firma);
 contenedorFirma.appendChild(fechaHora);
 
+// Agregar al cuerpo del PDF (o al div que genera el canvas)
 formularioPDF.appendChild(contenedorFirma);
 
 
@@ -134,5 +122,6 @@ formularioPDF.appendChild(contenedorFirma);
     document.getElementById('formulario').reset();
   });
 });
+
 
 
