@@ -59,26 +59,43 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
   const fecha = ahora.toLocaleDateString('es-ES');
   const hora = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
-  const contenedorFirma = document.createElement('div');
-  contenedorFirma.id = 'firma-autorizacion';
-  contenedorFirma.style.display = 'flex';
-  contenedorFirma.style.justifyContent = 'space-between';
-  contenedorFirma.style.marginTop = '30px';
-  contenedorFirma.style.fontWeight = 'bold';
+const contenedorFirma = document.createElement('div');
+contenedorFirma.id = 'firma-autorizacion';
+contenedorFirma.style.display = 'flex';
+contenedorFirma.style.flexDirection = 'column';
+contenedorFirma.style.alignItems = 'center';  // Centra horizontalmente
 
-  const firma = document.createElement('p');
-  firma.textContent = '____________________________Firma del padre/madre o tutor';
-  firma.style.margin = '0';
+contenedorFirma.style.marginTop = '40px';
+contenedorFirma.style.fontWeight = 'bold';
 
-  const fechaHora = document.createElement('p');
-  fechaHora.textContent = `${fecha} ${hora}`;
-  fechaHora.style.margin = '0';
-  fechaHora.style.textAlign = 'right';
+// Línea para firmar (centrada)
+const lineaFirma = document.createElement('div');
+lineaFirma.style.borderBottom = '2px solid black';
+lineaFirma.style.width = '60%';
+lineaFirma.style.marginBottom = '5px';
 
-  contenedorFirma.appendChild(firma);
-  contenedorFirma.appendChild(fechaHora);
+// Texto debajo de la línea (centrado)
+const textoFirma = document.createElement('p');
+textoFirma.textContent = 'Firma del padre/madre o tutor';
+textoFirma.style.margin = '0';
+textoFirma.style.textAlign = 'center';
+textoFirma.style.fontWeight = 'normal';
 
-  formularioPDF.appendChild(contenedorFirma);
+// Fecha y hora alineada a la izquierda
+const fechaHora = document.createElement('p');
+fechaHora.textContent = `${fecha} ${hora}`;
+fechaHora.style.margin = '15px 0 0 0'; // margen arriba para separar
+fechaHora.style.textAlign = 'left';
+fechaHora.style.fontWeight = 'normal';
+fechaHora.style.alignSelf = 'flex-start'; // importante para alinear a la izquierda dentro del flex column
+
+// Append
+contenedorFirma.appendChild(lineaFirma);
+contenedorFirma.appendChild(textoFirma);
+contenedorFirma.appendChild(fechaHora);
+
+formularioPDF.appendChild(contenedorFirma);
+
 
   // Escalar el formulario a un ancho fijo (A4) para evitar corte en móviles
   const originalWidth = formularioPDF.style.width;
@@ -117,4 +134,5 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
     document.getElementById('formulario').reset();
   });
 });
+
 
