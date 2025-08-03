@@ -80,9 +80,9 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
 
   formularioPDF.appendChild(contenedorFirma);
 
-  // Ajusta el ancho para la captura acorde al margen de 1.5 cm
+  // Escalar el formulario a un ancho fijo (A4) para evitar corte en móviles
   const originalWidth = formularioPDF.style.width;
-  formularioPDF.style.width = '770px'; // ligeramente mayor porque margen es menor
+  formularioPDF.style.width = '800px';
 
   html2canvas(formularioPDF, {
     scale: 2,
@@ -92,24 +92,22 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
 
     const imgData = canvas.toDataURL('image/png');
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF('p', 'mm', 'letter'); // tamaño carta
+    const pdf = new jsPDF('p', 'mm', 'a4');
 
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
-    const margin = 15; // margen 1.5 cm
+    const imgWidth = pageWidth - 20;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    const imgWidth = pageWidth - 2 * margin;
-    let imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    if (imgHeight > pageHeight - 2 * margin) {
-      imgHeight = pageHeight - 2 * margin;
+    let y = 10;
+    if (imgHeight > pageHeight - 20) {
+      const scale = (pageHeight - 20) / imgHeight;
+      pdf.addImage(imgData, 'PNG', 10, y, imgWidth * scale, imgHeight * scale);
+    } else {
+      pdf.addImage(imgData, 'PNG', 10, y, imgWidth, imgHeight);
     }
 
-    const x = (pageWidth - imgWidth) / 2;
-    const y = margin;
-
-    pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
     pdf.save('autorizacion_desfile.pdf');
 
     btnEnviar.style.display = 'inline-block';
