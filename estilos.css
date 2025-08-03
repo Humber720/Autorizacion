@@ -8,29 +8,18 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f2f2f2;
-
-  /* Centrado vertical y horizontal */
-  display: flex;
-  justify-content: center;  /* centra horizontal */
-  align-items: center;      /* centra vertical */
-  min-height: 100vh;        /* altura completa de la ventana */
-
-  padding: 20px; /* opcional, puedes reducir o quitar si no quieres espacio extra */
+  padding: 20px;
   color: #333;
 }
 
 /* Contenedor principal */
 .contenedor {
-  width: 100%;
   max-width: 800px;
+  margin: auto;
   background-color: white;
   padding: 25px 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow-wrap: break-word;
-
-  /* Separación superior/inferior para que no quede pegado */
-  margin: 20px auto;
 }
 
 /* Títulos */
@@ -43,9 +32,7 @@ h2, h3 {
 /* Párrafos y textos */
 p {
   margin-top: 15px;
-  line-height: 1.6;
-  text-align: justify;
-  word-wrap: break-word;
+  line-height: 1.5;
 }
 
 /* Inputs */
@@ -74,7 +61,6 @@ input[type="tel"] {
 .checkbox-text label {
   flex: 1;
   font-size: 15px;
-  line-height: 1.5;
 }
 
 /* Botones */
@@ -86,8 +72,10 @@ button {
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
-  margin: 20px auto 0;
+  margin-top: 20px;
   display: block;
+  margin-left: auto;
+  margin-right: auto;
   transition: background-color 0.3s ease;
 }
 
@@ -123,17 +111,21 @@ button:hover {
   color: green;
 }
 
-/* Firma */
-#firma-autorizacion {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 30px;
-  font-weight: bold;
-  flex-wrap: wrap;
-}
+/* Responsive */
+@media (max-width: 600px) {
+  .contenedor {
+    padding: 20px;
+  }
 
-/* Modal Header (botones) */
+  h2, h3 {
+    font-size: 18px;
+  }
+
+  input, button {
+    font-size: 15px;
+  }
+}
+/* Botones alineados */
 .modal-header {
   display: flex;
   justify-content: flex-end;
@@ -157,28 +149,3 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  body {
-    padding: 10px;
-  }
-
-  .contenedor {
-    padding: 20px;
-    margin: 10px auto;
-  }
-
-  h2, h3 {
-    font-size: 18px;
-  }
-
-  input, button {
-    font-size: 15px;
-  }
-
-  #firma-autorizacion {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-  }
-}
