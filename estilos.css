@@ -8,7 +8,14 @@
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f2f2f2;
-  padding: 20px;
+
+  /* Centrado vertical y horizontal */
+  display: flex;
+  justify-content: center;  /* centra horizontal */
+  align-items: center;      /* centra vertical */
+  min-height: 100vh;        /* altura completa de la ventana */
+
+  padding: 20px; /* opcional, puedes reducir o quitar si no quieres espacio extra */
   color: #333;
 }
 
@@ -16,12 +23,14 @@ body {
 .contenedor {
   width: 100%;
   max-width: 800px;
-  margin: 0 auto;
   background-color: white;
   padding: 25px 30px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow-wrap: break-word;
+
+  /* Separación superior/inferior para que no quede pegado */
+  margin: 20px auto;
 }
 
 /* Títulos */
@@ -150,9 +159,13 @@ button:hover {
 
 /* Responsive */
 @media (max-width: 600px) {
+  body {
+    padding: 10px;
+  }
+
   .contenedor {
     padding: 20px;
-    margin: 10px;
+    margin: 10px auto;
   }
 
   h2, h3 {
