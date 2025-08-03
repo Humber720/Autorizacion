@@ -5,34 +5,41 @@
   padding: 0;
 }
 
-body {
+html, body {
+  width: 100%;
+  height: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f2f2f2;
-  padding: 20px;
   color: #333;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  padding: 0;
 }
 
-/* Contenedor principal */
+/* Contenedor principal compatible con tamaño carta */
 .contenedor {
-  max-width: 800px;
+  width: 100%;
+  max-width: 816px; /* 8.5 pulgadas en px a 96dpi = ~816px */
+  min-height: 1056px; /* 11 pulgadas en px */
   margin: auto;
   background-color: white;
-  padding: 25px 30px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px 50px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Títulos */
 h2, h3 {
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   color: #004080;
 }
 
-/* Párrafos y textos */
+/* Texto general */
 p {
-  margin-top: 15px;
-  line-height: 1.5;
+  margin-top: 16px;
+  font-size: 16px;
 }
 
 /* Inputs */
@@ -46,11 +53,11 @@ input[type="tel"] {
   font-size: 16px;
 }
 
-/* Checkbox y texto alineado */
+/* Checkbox alineado al texto */
 .checkbox-text {
   display: flex;
   align-items: flex-start;
-  margin-top: 15px;
+  margin-top: 16px;
   gap: 10px;
 }
 
@@ -63,19 +70,17 @@ input[type="tel"] {
   font-size: 15px;
 }
 
-/* Botones */
+/* Botón centrado */
 button {
   background-color: #007acc;
   color: white;
   border: none;
-  padding: 12px 20px;
+  padding: 12px 24px;
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
-  margin-top: 20px;
+  margin: 30px auto 0;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
   transition: background-color 0.3s ease;
 }
 
@@ -103,7 +108,7 @@ button:hover {
   text-align: center;
 }
 
-/* Mensaje de respuesta */
+/* Mensaje */
 .mensaje {
   margin-top: 20px;
   text-align: center;
@@ -111,21 +116,7 @@ button:hover {
   color: green;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
-  .contenedor {
-    padding: 20px;
-  }
-
-  h2, h3 {
-    font-size: 18px;
-  }
-
-  input, button {
-    font-size: 15px;
-  }
-}
-/* Botones alineados */
+/* Modal botones */
 .modal-header {
   display: flex;
   justify-content: flex-end;
@@ -149,3 +140,21 @@ button:hover {
   background-color: #0056b3;
 }
 
+/* Responsive: mejor legibilidad en celular */
+@media (max-width: 600px) {
+  .contenedor {
+    padding: 20px 15px;
+  }
+
+  h2, h3 {
+    font-size: 18px;
+  }
+
+  input, button {
+    font-size: 15px;
+  }
+
+  .modal-contenido {
+    width: 95%;
+  }
+}
