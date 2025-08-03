@@ -43,29 +43,48 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
   const formularioPDF = document.getElementById('formularioPDF');
   const btnEnviar = document.getElementById('btnEnviar');
   const btnDescargar = document.getElementById('descargarPDF');
+  const modal = document.getElementById('modal');
 
-  // Asegurar visibilidad total en móviles
+  // Asegurar visibilidad completa
   window.scrollTo(0, 0);
   formularioPDF.style.minHeight = '100vh';
 
-  // Ocultar botones temporalmente
+  // Ocultar elementos innecesarios
   btnEnviar.style.display = 'none';
   btnDescargar.style.display = 'none';
+  modal.style.display = 'none';
 
-  // Obtener fecha y hora actual
-  const ahora = new Date();
-  const fechaStr = ahora.toLocaleDateString('es-ES');
-  const horaStr = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
-  const fechaHora = `${fechaStr} ${horaStr}`;
+  // Eliminar firmas anteriores si existen
+  const firmaAntigua = document.getElementById('firma-autorizacion');
+  if (firmaAntigua) firmaAntigua.remove();
 
-  // Crear línea de firma
-  const firmaLinea = document.createElement('p');
-  firmaLinea.textContent = `Firma del padre/madre o tutor: ____________________________  ${fechaHora}`;
-  firmaLinea.style.marginTop = '30px';
-  firmaLinea.style.fontWeight = 'bold';
-  formularioPDF.appendChild(firmaLinea);
+// Agregar firma
+const ahora = new Date();
+const fecha = ahora.toLocaleDateString('es-ES');
+const hora = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
 
-  // Captura y generación del PDF con mejoras para móviles
+const contenedorFirma = document.createElement('div');
+contenedorFirma.style.display = 'flex';
+contenedorFirma.style.justifyContent = 'space-between';
+contenedorFirma.style.marginTop = '30px';
+contenedorFirma.style.fontWeight = 'bold';
+
+const firma = document.createElement('p');
+firma.textContent = 'Firma del padre/madre o tutor: ____________________________';
+firma.style.margin = '0'; // quitar margen para que quede alineado bien
+
+const fechaHora = document.createElement('p');
+fechaHora.textContent = `${fecha} ${hora}`;
+fechaHora.style.margin = '0';
+fechaHora.style.textAlign = 'right';
+
+contenedorFirma.appendChild(firma);
+contenedorFirma.appendChild(fechaHora);
+
+formularioPDF.appendChild(contenedorFirma);
+
+
+  // Generar PDF
   html2canvas(formularioPDF, {
     scale: 2,
     useCORS: true,
@@ -83,11 +102,11 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
     pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
     pdf.save('autorizacion_desfile.pdf');
 
-    // Restaurar visibilidad de botones y limpiar
+    // Restaurar visibilidad
     btnEnviar.style.display = 'inline-block';
     btnDescargar.style.display = 'none';
-    firmaLinea.remove();
+    modal.style.display = 'none';
+    firma.remove();
     document.getElementById('formulario').reset();
-    document.getElementById('modal').style.display = 'none';
   });
 });
