@@ -38,21 +38,27 @@
     </form>
 
     <!-- Botón para descargar PDF, oculto hasta enviar -->
-    <button id="descargarPDF" style="display:none; margin-top: 15px;">Descargar PDF</button>
+
 
     <div id="modal" class="modal">
       <div class="modal-contenido">
         <p id="modal-mensaje">✅ ¡Formulario enviado correctamente!</p>
         <button id="cerrar-modal">Cerrar</button>
+        <button id="descargarPDF" style="display:none; margin-top: 15px;">Descargar PDF</button>
       </div>
     </div>
 
     <p id="respuesta" class="mensaje"></p>
   </div>
 
-  <!-- Librerías -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- Librerías-->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+  window.jspdf = window.jspdf || {};
+  </script>
+
   <script src="script.js"></script>
-</body>
+  </body>
 </html>
