@@ -1,44 +1,45 @@
 /* Reset básico */
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
+/* Estilo general del cuerpo */
+body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f2f2f2;
   color: #333;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  font-size: 16px;
   padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
 }
 
-/* Contenedor principal compatible con tamaño carta */
+/* Contenedor para PDF - tamaño carta exacto */
 .contenedor {
-  width: 100%;
-  max-width: 816px; /* 8.5 pulgadas en px a 96dpi = ~816px */
-  min-height: 1056px; /* 11 pulgadas en px */
-  margin: auto;
+  width: 21.59cm;
+  min-height: 27.94cm;
   background-color: white;
-  padding: 40px 50px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 2cm; /* puedes ajustar a 0 si no deseas margen interno */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 /* Títulos */
 h2, h3 {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   color: #004080;
 }
 
-/* Texto general */
+/* Párrafos y texto general */
 p {
-  margin-top: 16px;
+  margin-top: 15px;
+  line-height: 1.5;
+  text-align: justify;
   font-size: 16px;
 }
 
@@ -53,11 +54,11 @@ input[type="tel"] {
   font-size: 16px;
 }
 
-/* Checkbox alineado al texto */
+/* Checkbox con texto alineado */
 .checkbox-text {
   display: flex;
   align-items: flex-start;
-  margin-top: 16px;
+  margin-top: 15px;
   gap: 10px;
 }
 
@@ -70,16 +71,16 @@ input[type="tel"] {
   font-size: 15px;
 }
 
-/* Botón centrado */
+/* Botones */
 button {
   background-color: #007acc;
   color: white;
   border: none;
-  padding: 12px 24px;
+  padding: 12px 20px;
   border-radius: 6px;
   font-size: 16px;
   cursor: pointer;
-  margin: 30px auto 0;
+  margin: 20px auto 0 auto;
   display: block;
   transition: background-color 0.3s ease;
 }
@@ -108,7 +109,7 @@ button:hover {
   text-align: center;
 }
 
-/* Mensaje */
+/* Mensaje de éxito */
 .mensaje {
   margin-top: 20px;
   text-align: center;
@@ -116,7 +117,25 @@ button:hover {
   color: green;
 }
 
-/* Modal botones */
+/* Firma */
+#contenedor-firma {
+  margin-top: 40px;
+}
+
+#contenedor-firma p {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+#contenedor-firma p:first-child {
+  text-align: left;
+}
+
+#contenedor-firma p:last-child {
+  text-align: center;
+}
+
+/* Botones del modal */
 .modal-header {
   display: flex;
   justify-content: flex-end;
@@ -140,10 +159,13 @@ button:hover {
   background-color: #0056b3;
 }
 
-/* Responsive: mejor legibilidad en celular */
-@media (max-width: 600px) {
+/* RESPONSIVE para celulares: solo afecta vista previa */
+@media screen and (max-width: 768px) {
   .contenedor {
-    padding: 20px 15px;
+    width: 100%;
+    min-height: auto;
+    padding: 20px;
+    box-shadow: none;
   }
 
   h2, h3 {
@@ -154,7 +176,7 @@ button:hover {
     font-size: 15px;
   }
 
-  .modal-contenido {
-    width: 95%;
+  #contenedor-firma p {
+    font-size: 14px;
   }
 }
