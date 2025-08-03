@@ -67,7 +67,7 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
   contenedorFirma.style.fontWeight = 'bold';
 
   const firma = document.createElement('p');
-  firma.textContent = 'Firma del padre/madre o tutor: ____________________________';
+  firma.textContent = '____________________________Firma del padre/madre o tutor';
   firma.style.margin = '0';
 
   const fechaHora = document.createElement('p');
@@ -117,3 +117,4 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
     document.getElementById('formulario').reset();
   });
 });
+
