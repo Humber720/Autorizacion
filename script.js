@@ -80,9 +80,9 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
 
   formularioPDF.appendChild(contenedorFirma);
 
-  // Escalar el formulario a un ancho fijo (carta) para evitar corte en móviles
+  // Ajusta el ancho para la captura acorde al margen de 1.5 cm
   const originalWidth = formularioPDF.style.width;
-  formularioPDF.style.width = '800px';
+  formularioPDF.style.width = '770px'; // ligeramente mayor porque margen es menor
 
   html2canvas(formularioPDF, {
     scale: 2,
@@ -92,33 +92,24 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
 
     const imgData = canvas.toDataURL('image/png');
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF('p', 'mm', 'letter'); // Tamaño carta (8.5"x11")
+    const pdf = new jsPDF('p', 'mm', 'letter'); // tamaño carta
 
-    const pageWidth = pdf.internal.pageSize.getWidth();   // ~215.9 mm
-    const pageHeight = pdf.internal.pageSize.getHeight(); // ~279.4 mm
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
 
-    const margin = 20; // Márgenes de 2 cm (20 mm)
+    const margin = 15; // margen 1.5 cm
 
-    // Calcular ancho máximo para imagen dentro de márgenes
     const imgWidth = pageWidth - 2 * margin;
-
-    // Calcular altura proporcional para la imagen
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    // Ajustar si la altura es mayor al espacio disponible
-    let finalImgWidth = imgWidth;
-    let finalImgHeight = imgHeight;
+    let imgHeight = (canvas.height * imgWidth) / canvas.width;
 
     if (imgHeight > pageHeight - 2 * margin) {
-      finalImgHeight = pageHeight - 2 * margin;
-      finalImgWidth = (canvas.width * finalImgHeight) / canvas.height;
+      imgHeight = pageHeight - 2 * margin;
     }
 
-    // Calcular posición para centrar la imagen
-    const x = (pageWidth - finalImgWidth) / 2;
-    const y = (pageHeight - finalImgHeight) / 2;
+    const x = (pageWidth - imgWidth) / 2;
+    const y = margin;
 
-    pdf.addImage(imgData, 'PNG', x, y, finalImgWidth, finalImgHeight);
+    pdf.addImage(imgData, 'PNG', x, y, imgWidth, imgHeight);
     pdf.save('autorizacion_desfile.pdf');
 
     btnEnviar.style.display = 'inline-block';
