@@ -45,21 +45,16 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
   const btnDescargar = document.getElementById('descargarPDF');
   const modal = document.getElementById('modal');
 
-  // Mostrar todo
   window.scrollTo(0, 0);
-  formularioPDF.style.minHeight = 'auto';
-  formularioPDF.style.padding = '20px';
+  formularioPDF.style.minHeight = '100vh';
 
-  // Ocultar botones
   btnEnviar.style.display = 'none';
   btnDescargar.style.display = 'none';
   modal.style.display = 'none';
 
-  // Quitar firmas anteriores si hay
   const firmaAntigua = document.getElementById('firma-autorizacion');
   if (firmaAntigua) firmaAntigua.remove();
 
-  // Firma y fecha
   const ahora = new Date();
   const fecha = ahora.toLocaleDateString('es-ES');
   const hora = ahora.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
@@ -78,35 +73,47 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
   const fechaHora = document.createElement('p');
   fechaHora.textContent = `${fecha} ${hora}`;
   fechaHora.style.margin = '0';
+  fechaHora.style.textAlign = 'right';
 
   contenedorFirma.appendChild(firma);
   contenedorFirma.appendChild(fechaHora);
+
   formularioPDF.appendChild(contenedorFirma);
 
-  // Esperar un instante para que se renderice todo
-  setTimeout(() => {
-    html2canvas(formularioPDF, {
-      scale: 3, // mejora calidad y reduce cortes
-      useCORS: true,
-      windowWidth: 794, // ancho A4 en px
-      windowHeight: 1123 // alto A4 en px
-    }).then(canvas => {
-      const imgData = canvas.toDataURL('image/png');
-      const { jsPDF } = window.jspdf;
-      const pdf = new jsPDF('p', 'mm', 'a4');
+  // Escalar el formulario a un ancho fijo (A4) para evitar corte en móviles
+  const originalWidth = formularioPDF.style.width;
+  formularioPDF.style.width = '800px';
 
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const imgWidth = pageWidth - 20;
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  html2canvas(formularioPDF, {
+    scale: 2,
+    useCORS: true
+  }).then(canvas => {
+    formularioPDF.style.width = originalWidth;
 
-      pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
-      pdf.save('autorizacion_desfile.pdf');
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
 
-      // Restaurar botones
-      btnEnviar.style.display = 'inline-block';
-      btnDescargar.style.display = 'none';
-      modal.style.display = 'none';
-      document.getElementById('formulario').reset();
-    });
-  }, 200); // espera corta para asegurar visibilidad
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+
+    const imgWidth = pageWidth - 20;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let y = 10;
+    if (imgHeight > pageHeight - 20) {
+      const scale = (pageHeight - 20) / imgHeight;
+      pdf.addImage(imgData, 'PNG', 10, y, imgWidth * scale, imgHeight * scale);
+    } else {
+      pdf.addImage(imgData, 'PNG', 10, y, imgWidth, imgHeight);
+    }
+
+    pdf.save('autorizacion_desfile.pdf');
+
+    btnEnviar.style.display = 'inline-block';
+    btnDescargar.style.display = 'none';
+    modal.style.display = 'none';
+    contenedorFirma.remove();
+    document.getElementById('formulario').reset();
+  });
 });
