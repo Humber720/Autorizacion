@@ -97,17 +97,28 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
-    const imgWidth = pageWidth - 20;
+    // Define margen pequeño pero simétrico
+    const margin = 10;
+
+    // Calcula ancho máximo para imagen respetando margen
+    const imgWidth = pageWidth - 2 * margin;
+
+    // Calcula altura proporcional para la imagen
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    let y = 10;
-    if (imgHeight > pageHeight - 20) {
-      const scale = (pageHeight - 20) / imgHeight;
-      pdf.addImage(imgData, 'PNG', 10, y, imgWidth * scale, imgHeight * scale);
-    } else {
-      pdf.addImage(imgData, 'PNG', 10, y, imgWidth, imgHeight);
+    // Si la altura es mayor que la página, escala para que quepa en altura
+    let finalImgWidth = imgWidth;
+    let finalImgHeight = imgHeight;
+    if (imgHeight > pageHeight - 2 * margin) {
+      finalImgHeight = pageHeight - 2 * margin;
+      finalImgWidth = (canvas.width * finalImgHeight) / canvas.height;
     }
 
+    // Calcula posición para centrar horizontal y verticalmente la imagen
+    const x = (pageWidth - finalImgWidth) / 2;
+    const y = (pageHeight - finalImgHeight) / 2;
+
+    pdf.addImage(imgData, 'PNG', x, y, finalImgWidth, finalImgHeight);
     pdf.save('autorizacion_desfile.pdf');
 
     btnEnviar.style.display = 'inline-block';
