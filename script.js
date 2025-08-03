@@ -80,7 +80,7 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
 
   formularioPDF.appendChild(contenedorFirma);
 
-  // Escalar el formulario a un ancho fijo (A4) para evitar corte en móviles
+  // Escalar el formulario a un ancho fijo (carta) para evitar corte en móviles
   const originalWidth = formularioPDF.style.width;
   formularioPDF.style.width = '800px';
 
@@ -92,29 +92,29 @@ document.getElementById('descargarPDF').addEventListener('click', function () {
 
     const imgData = canvas.toDataURL('image/png');
     const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdf = new jsPDF('p', 'mm', 'letter'); // Tamaño carta (8.5"x11")
 
-    const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
+    const pageWidth = pdf.internal.pageSize.getWidth();   // ~215.9 mm
+    const pageHeight = pdf.internal.pageSize.getHeight(); // ~279.4 mm
 
-    // Define margen pequeño pero simétrico
-    const margin = 10;
+    const margin = 20; // Márgenes de 2 cm (20 mm)
 
-    // Calcula ancho máximo para imagen respetando margen
+    // Calcular ancho máximo para imagen dentro de márgenes
     const imgWidth = pageWidth - 2 * margin;
 
-    // Calcula altura proporcional para la imagen
+    // Calcular altura proporcional para la imagen
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    // Si la altura es mayor que la página, escala para que quepa en altura
+    // Ajustar si la altura es mayor al espacio disponible
     let finalImgWidth = imgWidth;
     let finalImgHeight = imgHeight;
+
     if (imgHeight > pageHeight - 2 * margin) {
       finalImgHeight = pageHeight - 2 * margin;
       finalImgWidth = (canvas.width * finalImgHeight) / canvas.height;
     }
 
-    // Calcula posición para centrar horizontal y verticalmente la imagen
+    // Calcular posición para centrar la imagen
     const x = (pageWidth - finalImgWidth) / 2;
     const y = (pageHeight - finalImgHeight) / 2;
 
