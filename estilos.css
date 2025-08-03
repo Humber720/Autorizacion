@@ -12,6 +12,8 @@ body {
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  overflow: visible;
+  min-height: 100vh; /* para capturas completas con html2canvas */
 }
 
 h2, h3 {
@@ -27,6 +29,7 @@ input, button {
   border: 1px solid #ccc;
   border-radius: 8px;
   box-sizing: border-box;
+  font-size: 16px;
 }
 
 button {
@@ -46,6 +49,7 @@ button:hover {
   color: red;
 }
 
+/* MODAL */
 .modal {
   display: none;
   position: fixed;
@@ -53,6 +57,7 @@ button:hover {
   background-color: rgba(0,0,0,0.6);
   justify-content: center;
   align-items: center;
+  z-index: 9999;
 }
 
 .modal-contenido {
@@ -64,6 +69,29 @@ button:hover {
   margin: auto;
 }
 
+/* CHECKBOX */
+.checkbox-text {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.checkbox-text input[type="checkbox"] {
+  margin-top: 4px;
+  width: 18px;
+  height: 18px;
+}
+
+.checkbox-text label {
+  display: block;
+  margin: 0;
+  line-height: 1.4;
+  font-weight: bold;
+}
+
+/* RESPONSIVO */
 @media (max-width: 600px) {
   .contenedor {
     margin: 10px;
@@ -73,25 +101,13 @@ button:hover {
   h2, h3 {
     font-size: 18px;
   }
-}
 
-.checkbox-text {
-  display: flex;
-  align-items: flex-start;  /* Alinea la parte superior del texto */
-  gap: 10px;
-  margin-top: 10px;
-  margin-bottom: 15px;
-}
+  input, button {
+    font-size: 16px;
+  }
 
-.checkbox-text input[type="checkbox"] {
-  margin-top: 4px;  /* Ajuste fino para alinear mejor */
-  width: 18px;
-  height: 18px;
+  .checkbox-text {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
-
-.checkbox-text label {
-  display: block;
-  margin: 0;
-  line-height: 1.4;
-}
-
